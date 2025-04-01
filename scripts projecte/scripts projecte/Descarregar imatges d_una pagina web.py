@@ -1,24 +1,31 @@
 import os
-import platform
-import sys
-import random
-import time
 import requests
-import csv
 from bs4 import BeautifulSoup
-from datetime import datetime
+
 ###Descarregar imatges d'una pagina web
 url = input("Indica la pagina web: ")
-carpeta = input("Indica on vols descarregar les imatges")
+carpeta = input("Indica on vols descarregar les imatges: ")
 
-soup = BeautifulSoup(requests.get(url).text, "html.parser")
-for i, img in enumerate(soup.find_all("img")):
-    img_url = img.get("src", "").strip()
-    if img_url and not img_url.startswith("http"):
-        img_url = url + img_url
-    
-    img_resposta = requests.get(img_url, stream=True)
-    with open(os.path.join(carpeta, f"imatge_{i}.jpg"), "wb") as f:
-        for chunk in img_resposta.iter_content(1024):
-            f.write(chunk)
-    print(f"Descarregada: {img_url}")
+resposta = requests.get(url)
+html = resposta.text
+
+soup = BeautifulSoup(html, "html.parser")
+imatges = soup.find_all("img")
+
+contador = 1
+
+for imatge in imatges:
+    img_url = imgatge.get("src")
+    img_url_full = url + "/" + img_url
+
+    nom_fitxer = f"imatge_{contador},jpg"
+    url_full = os.path.join(destino, nom_fitxer)
+
+    wget = f'wget -q "{img_url_full}" -0 "{url_full}"'
+
+    resultat = os.system(wget)
+    if resultat == 0:
+        print(f"Imatge Descarregada: {nom_fitxer}")
+        contador += 1
+    else:
+        print(f"no se pudo descargar: {img_url_full}")
