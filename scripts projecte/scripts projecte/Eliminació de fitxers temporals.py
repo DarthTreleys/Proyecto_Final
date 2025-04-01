@@ -8,7 +8,7 @@ import csv
 from bs4 import BeautifulSoup
 from datetime import datetime
 ### Eliminació de fitxers temporals
-directorio = input("Indica el directori")
+directorio = input("Indica el directori") #formulario que especifique directorio (php)
     
 for archivo in os.listdir(directorio):
     if archivo.endswith(".tmp") or archivo.endswith(".log"):
