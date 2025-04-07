@@ -1,12 +1,6 @@
 import os
 import platform
 import sys
-import random
-import time
-import requests
-import csv
-from bs4 import BeautifulSoup
-from datetime import datetime
 ##Programa que organitzi els arxius en un directori, movent-los a subdirectoris en base la seva extensió
 directori = input("Directori: ")
 
