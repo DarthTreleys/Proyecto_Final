@@ -1,12 +1,7 @@
 import os
 import platform
 import sys
-import random
-import time
-import requests
 import csv
-from bs4 import BeautifulSoup
-from datetime import datetime
 ### Creacio d'usuaris amb un csv
 with open('usuaris.csv', newline='', encoding='utf-8') as csvfile:
     reader = csv.DictReader(csvfile)
