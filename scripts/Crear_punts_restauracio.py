@@ -1,13 +1,7 @@
 import os
 import platform
 import sys
-import random
 import time
-import requests
-import csv
-from bs4 import BeautifulSoup
-from datetime import datetime
-
 #Crear puntos de Restauración
 
 SOURCE = input("Indica la carpeta que vols incloure en el punt de restauració: ").strip()
