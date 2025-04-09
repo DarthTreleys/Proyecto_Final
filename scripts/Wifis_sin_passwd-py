@@ -1,3 +1,4 @@
+#hay que cronar el script
 import subprocess
 
 # Ejecutar el comando para listar redes Wi-Fi con sus niveles de seguridad
