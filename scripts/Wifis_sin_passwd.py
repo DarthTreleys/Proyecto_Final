@@ -1,4 +1,4 @@
-#hay que cronar el script
+#hay que cronar el script (*/5 * * * * /usr/bin/python3 /ruta/a/Wifis_sin_passwd.py)
 import subprocess
 
 # Ejecutar el comando para listar redes Wi-Fi con sus niveles de seguridad
