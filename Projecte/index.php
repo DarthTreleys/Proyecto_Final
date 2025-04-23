@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard dinámico completo</title>
+  <title>Consultoria de Hardening</title>
   <link rel="stylesheet" href="diseny.css">
   <script>
   function cargarContenido(seccion) {
@@ -38,7 +38,8 @@
 
     <div class="right-panel">
       <div class="profile-card">
-        <h4>Usuario</h4>
+        <h4>Usuari: <?php echo htmlspecialchars($_SESSION['nom']); ?></h4>
+          <a href="logout.php">Tancar la sessio</a>
         <div class="profile-pic"></div>
       </div>
       <div class="info-card">
