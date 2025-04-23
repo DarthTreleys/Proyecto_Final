@@ -36,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <p> No tens compte? <a href="register.php">Registra't aqui</a></p>
 </body>
 </html>*/
-<?php
 session_start();
 require 'db.php';
 
