@@ -4,10 +4,10 @@ require 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $usuario = $_POST['usuario'] ?? '';
-  $clave = $_POST['clave'] ?? '';
+  $passwd = $_POST['passwd'] ?? '';
 
-  $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE usuario = ? AND clave = ?");
-  $stmt->execute([$usuario, $clave]);
+  $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE Usuario = ? AND Password = ?");
+  $stmt->execute([$usuario, $passwd]);
   $user = $stmt->fetch();
 
   if ($user) {
