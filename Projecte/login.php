@@ -1,35 +1,38 @@
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $conn->real_escape_string($_POST['username']);
-    $password = $conn->real_escape_string($_POST['password']);
+<?php
+session_start();
+require 'db.php';
 
-    $sql = "SELECT * FROM usuarios WHERE username='$username' AND password='$password'";
-    $result = $conn->query($sql);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $usuari = $_POST['usuari'] ?? '';
+  $passwd = $_POST['passwd'] ?? '';
 
-    if ($result->num_rows === 1) {
-        $_SESSION['username'] = $username;
-        header("Location: dashboard.php");
-        exit();
-    } else {
-        $error = "Usuario o contraseña incorrectos.";
-    }
+  $stmt = $pdo->prepare("SELECT * FROM usuaris WHERE User = ? AND Password = ?");
+  $stmt->execute([$usuari, $passwd]);
+  $user = $stmt->fetch();
+
+  if ($user) {
+    $_SESSION['usuari'] = $user['usuari'];
+    header('Location: index.php');
+    exit;
+  } else {
+    $error = "Usuari o contrasenya incorrecte.";
+  }
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
+  <title>Iniciar sessio</title>
 </head>
 <body>
-    <h2>Iniciar sesión</h2>
-    <form method="post" action="">
-        <label>Usuario:</label><br>
-        <input type="text" name="username" required><br>
-        <label>Contraseña:</label><br>
-        <input type="password" name="password" required><br><br>
-        <input type="submit" value="Entrar">
-    </form>
-    <p style="color:red;"><?php echo $error; ?></p>
+  <h2>Login</h2>
+  <?php if (!empty($error)) echo "<p style='color:red;'>$error</p>"; ?>
+  <form method="POST">
+    <input type="text" name="usuari" placeholder="Usuari" required><br><br>
+    <input type="password" name="passwd" placeholder="Contrasenya" required><br><br>
+    <button type="submit">Entrar</button>
+  </form>
+  <p> No tens compte? <a href="register.php">Registra't aqui</a></p>
 </body>
 </html>
