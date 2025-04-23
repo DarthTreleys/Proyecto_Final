@@ -3,7 +3,7 @@ session_start();
 require 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $usuario = $_POST['usuari'] ?? '';
+  $usuari = $_POST['usuari'] ?? '';
   $passwd = $_POST['passwd'] ?? '';
 
   $stmt = $pdo->prepare("SELECT * FROM usuaris WHERE User = ? AND Password = ?");
