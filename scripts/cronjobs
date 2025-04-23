@@ -1,0 +1,35 @@
+//Actualitzacions automátiques (Mensuals)
+	sudo crontab -e
+	0 3 1 * * apt update && apt -y upgrade && apt -y autoremove
+
+//Crear punts de restauracio (abans de les actualitzacions)
+	sudo apt install rsnapshot
+	nano /etc/rsnapshot.conf
+		backup /etc/ localhost/
+		backup /home/ localhost/
+	sudo crontab -e
+		0 0 1 * * rsnapshot monthly
+	
+//Crear Copies de seguretat (Semanals)
+	sudo crontab -e
+	0 0 * 7 * tar -cvpzf /mnt/backup/CopiaDeSeguridad-$(date +\%Y-\%m-\%d).tar.gz /
+
+//Eliminar Fitxers temporals (trimensual)
+	sudo crontab -e
+	0 0 1 * */3 rm -rf /tmp/*.tmp
+
+//Realizar análisis de antivirus (clamAV)
+
+//Desinstalar aplicaciones sin uso recurrente
+
+//Realizar escaneo de puertos (nmap)
+
+//Monitorizar CPU/RAM/Disk
+	*/5 * * * * echo "[ $(date '+%Y-%m-%d %H:%M:%S') ] CPU: $(top -bn1 | grep 'Cpu(s)')" >> ~/cpu_monitor.log
+	*/5 * * * * echo "[ $(date '+%Y-%m-%d %H:%M:%S') ] RAM:	$(top -bn1 | grep "MiB Mem")" >> ~/ram_monitor.log
+	*/5 * * * * echo "[ $(date '+%Y-%m-%d %H:%M:%S') ] DISK: $(df -h / | grep -v Filesystem)" >> ~/disk_monitor.log
+
+
+
+//Bloquear la conexión a redes wifi sin contraseña
+	*/5 * * * * /usr/bin/python3 /ruta/a/Wifis_sin_passwd.py
