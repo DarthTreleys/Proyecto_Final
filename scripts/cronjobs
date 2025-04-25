@@ -1,35 +1,88 @@
-//Actualitzacions automátiques (Mensuals)
-	sudo crontab -e
-	0 3 1 * * apt update && apt -y upgrade && apt -y autoremove
+import subprocess
+import sys
 
-//Crear punts de restauracio (abans de les actualitzacions)
-	sudo apt install rsnapshot
-	nano /etc/rsnapshot.conf
-		backup /etc/ localhost/
-		backup /home/ localhost/
-	sudo crontab -e
-		0 0 1 * * rsnapshot monthly
-	
-//Crear Copies de seguretat (Semanals)
-	sudo crontab -e
-	0 0 * 7 * tar -cvpzf /mnt/backup/CopiaDeSeguridad-$(date +\%Y-\%m-\%d).tar.gz /
+# Importar crontab. Si falla, li instalem nosaltres.
+try:
+    from crontab import CronTab
+except ImportError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "python-crontab"])
+    from crontab import CronTab
 
-//Eliminar Fitxers temporals (trimensual)
-	sudo crontab -e
-	0 0 1 * */3 rm -rf /tmp/*.tmp
+# Obtenir usuari actual
+user = getpass.getuser()
 
-//Realizar análisis de antivirus (clamAV)
+# Instal·lar paquets necessaris
+os.system("sudo apt update && sudo apt install -y rsnapshot clamav nmap")
 
-//Desinstalar aplicaciones sin uso recurrente
+# Crear directoris si no existeixen
+os.makedirs("/mnt/backup", exist_ok=True)
+os.makedirs("/var/log/clamav", exist_ok=True)
+os.makedirs("/var/log/nmap", exist_ok=True)
 
-//Realizar escaneo de puertos (nmap)
+# Configurar rsnapshot.conf
+rsnapshot_conf = """
+config_version  1.2
+snapshot_root   /var/cache/rsnapshot/
+no_create_root  1
 
-//Monitorizar CPU/RAM/Disk
-	*/5 * * * * echo "[ $(date '+%Y-%m-%d %H:%M:%S') ] CPU: $(top -bn1 | grep 'Cpu(s)')" >> ~/cpu_monitor.log
-	*/5 * * * * echo "[ $(date '+%Y-%m-%d %H:%M:%S') ] RAM:	$(top -bn1 | grep "MiB Mem")" >> ~/ram_monitor.log
-	*/5 * * * * echo "[ $(date '+%Y-%m-%d %H:%M:%S') ] DISK: $(df -h / | grep -v Filesystem)" >> ~/disk_monitor.log
+interval        monthly 1
 
+retain  monthly 3
 
+logfile /var/log/rsnapshot.log
+lockfile /var/run/rsnapshot.pid
 
-//Bloquear la conexión a redes wifi sin contraseña
-	*/5 * * * * /usr/bin/python3 /ruta/a/Wifis_sin_passwd.py
+backup  /etc/       localhost/
+backup  /home/      localhost/
+"""
+
+with open("/tmp/rsnapshot.conf", "w") as f:
+    f.write(rsnapshot_conf)
+
+os.system("sudo cp /tmp/rsnapshot.conf /etc/rsnapshot.conf")
+
+# Configurar cronjobs
+cron = CronTab(user=True)
+
+# Funcions per afegir una línia única
+def add_unique_cron(command, schedule):
+    job_exists = any(job.command == command for job in cron)
+    if not job_exists:
+        job = cron.new(command=command)
+        job.setall(schedule)
+
+# 1. Actualitzacions mensuals
+add_unique_cron("apt update && apt -y upgrade && apt -y autoremove", "0 3 1 * *")
+
+# 2. Punt de restauració
+add_unique_cron("rsnapshot monthly", "0 0 1 * *")
+
+# 3. Còpia de seguretat setmanal
+add_unique_cron('tar -cvpzf /mnt/backup/CopiaDeSeguridad-$(date +\\%Y-\\%m-\\%d).tar.gz /', "0 0 * 7 *")
+
+# 4. Esborrar fitxers temporals (trimestral)
+add_unique_cron("rm -rf /tmp/*.tmp", "0 0 1 */3 *")
+
+# 5. Escaneig antivirus (ClamAV)
+add_unique_cron('clamscan -r /home --bell --log=/var/log/clamav/scan_$(date +\\%Y\\%m\\%d).log', "0 2 1 * *")
+
+# 6. Desinstal·lació apps sense ús
+add_unique_cron('find ~/.local/bin /opt -type f -executable -atime +365 -exec echo "Eliminando {}" \\; -exec rm -f {} \\;', "0 3 1 * *")
+
+# 7. Escaneig de ports amb Nmap (cada hora)
+add_unique_cron('nmap -sS -Pn -T4 localhost -oN /var/log/nmap/scan_$(date +\\%Y\\%m\\%d_\\%H\\%M).log', "0 * * * *")
+
+# 8. Monitorització CPU, RAM, Disk
+add_unique_cron('echo "[ $(date \'+%Y-%m-%d %H:%M:%S\') ] CPU: $(top -bn1 | grep \'Cpu(s)\')" >> ~/cpu_monitor.log', "*/5 * * * *")
+add_unique_cron('echo "[ $(date \'+%Y-%m-%d %H:%M:%S\') ] RAM: $(top -bn1 | grep \'MiB Mem\')" >> ~/ram_monitor.log', "*/5 * * * *")
+add_unique_cron('echo "[ $(date \'+%Y-%m-%d %H:%M:%S\') ] DISK: $(df -h / | grep -v Filesystem)" >> ~/disk_monitor.log', "*/5 * * * *")
+
+# 9. Bloquejar WiFi sense contrasenya
+wifi_script_path = "Wifis_sin_passwd.py"
+if os.path.exists(wifi_script_path):
+    add_unique_cron(f"/usr/bin/python3 {wifi_script_path}", "*/5 * * * *")
+else:
+    print(f"[ADVERTÈNCIA] No s'ha trobat l'script necesari per configurar la funció 9. Comunica-ho per poder arreglar el problema.")
+
+cron.write()
+print("✔️ Configuració de cronjobs completada.")
