@@ -1,7 +1,7 @@
 import subprocess
-import platform
+import os
 
-if platform.system() == 'Linux':
+if os.name == 'posix':
     result = subprocess.run(['nmcli', '-f', 'SSID,SECURITY', 'dev', 'wifi'], stdout=subprocess.PIPE)
     output = result.stdout.decode()
 
@@ -14,7 +14,7 @@ if platform.system() == 'Linux':
                 subprocess.run(['nmcli', 'connection', 'delete', ssid])
                 print(f"Red abierta eliminada o bloqueada: {ssid}")
 
-elif platform.system() == 'Windows':
+elif os.name == 'nt':
     result = subprocess.run(['netsh', 'wlan', 'show', 'networks', 'mode=bssid'], stdout=subprocess.PIPE)
     output = result.stdout.decode(errors='ignore')
 
