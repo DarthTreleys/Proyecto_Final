@@ -4,9 +4,7 @@ import sys
 ##Programa que organitzi els arxius en un directori, movent-los a subdirectoris en base la seva extensió
 directori = input("Directori: ")
 
-so = platform.system()
-
-if so="Windows":
+if os.name="nt":
 for arxiu in os.listdir(directori):
     ruta = os.path.join(directori, arxiu)
     if os.path.isfile(ruta):
@@ -18,7 +16,7 @@ for arxiu in os.listdir(directori):
         if extension == "mp3":
             os.system("move " +ruta+ "~\\Music")
 
-elif so="Linux":
+elif os.name="posix":
 for arxiu in os.listdir(directori):
     ruta = os.path.join(directori, arxiu)
     if os.path.isfile(ruta):
