@@ -2,8 +2,7 @@ import subprocess
 import os
 import platform
 
-so = platform.system()
-if so="Linux":
+if os.name="posix":
 print("Actualizando lista de paquetes...")
 subprocess.run(["sudo", "apt", "update"], check=True)
 
@@ -15,7 +14,7 @@ subprocess.run(["sudo", "apt", "autoremove", "-y"], check=True)
 
 print("Actualización completada con éxito.")
 
-elif so="Windows":
+elif os.name="nt":
 print("Buscando actualizaciones...")
 resultado = subprocess.run(["powershell", "-Command", "Get-WindowsUpdate"], capture_output=True, text=True)
 print("Actualizaciones disponibles:\n", resultado.stdout)
@@ -27,4 +26,4 @@ print("Instalando actualizaciones:\n", resultado.stdout)
 print("Proceso completado.")
 
 else: 
-print("Lo sentimos, su sistema no es compatible con este script.")
+print("Lo sentimos, su sistema no es compatible con nuestros servicios")
