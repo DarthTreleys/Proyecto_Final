@@ -1,10 +1,17 @@
 import os
-import platform
-import sys
-### Eliminació de fitxers temporals
-directorio = input("Indica el directori") #formulario que especifique directorio (php)
-    
+
+directorio = input("Indica el directori: ").strip()
+
+# Validar que el directorio existe
+if not os.path.isdir(directorio):
+    print("El directori indicat no existeix.")
+    exit(1)
+
 for archivo in os.listdir(directorio):
-    if archivo.endswith(".tmp") or archivo.endswith(".log"):
-        os.remove(os.path.join(directorio, archivo))
-        print("Eliminado: " + archivo)
+    ruta = os.path.join(directorio, archivo)
+    if os.path.isfile(ruta) and (archivo.endswith(".tmp") or archivo.endswith(".log")):
+        try:
+            os.remove(ruta)
+            print("Eliminado:", archivo)
+        except Exception as e:
+            print(f"No se pudo eliminar {archivo}: {e}")
