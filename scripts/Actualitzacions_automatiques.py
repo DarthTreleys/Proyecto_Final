@@ -1,5 +1,5 @@
 import subprocess
-import so
+import os
 
 so = platform.system()
 if so="Linux":
