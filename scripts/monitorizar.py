@@ -1,6 +1,9 @@
 import psutil
 import datetime
 
+so=platform.system()
+
+if so="Linux"
 now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 cpu = psutil.cpu_percent(interval=1)
 ram = psutil.virtual_memory()
@@ -14,5 +17,14 @@ log = (
     "--------------------------\n"
 )
 
+if so="Linux":
 with open("/var/log/sys_monitor.log", "a") as f:
+    f.write(log)
+    
+elif so="Windows":
+# Ruta al archivo log dentro de la carpeta "Documents" del usuario
+log_path = os.path.expanduser("~\\Documents\\sys_monitor.log")
+# Asegurarse de que el directorio exista
+os.makedirs(os.path.dirname(log_path), exist_ok=True)
+with open(log_path, "a") as f:
     f.write(log)
