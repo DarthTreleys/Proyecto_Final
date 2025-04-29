@@ -1,7 +1,6 @@
 import psutil
 import datetime
 
-if so="Linux"
 now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 cpu = psutil.cpu_percent(interval=1)
 ram = psutil.virtual_memory()
