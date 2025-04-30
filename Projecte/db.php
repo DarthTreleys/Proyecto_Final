@@ -2,8 +2,8 @@
 session_start();
 
 $host = "localhost";
-$usuari = "root";
-$contrasenya = "";
+$usuari = "admin";
+$contrasenya = "ubu";
 $bbdd = "ProjecteFinal";
 
 try {
