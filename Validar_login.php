@@ -1,10 +1,10 @@
 <?php
 session_start();
-include('conexion.php');
+include('db.php');
 
 //verificar conexion con la BBDD
 if (!$conn) {
-    die("Error al conectarse con la base de datos");
+    die("Error al conectar-se con la base de dades");
 }
 
 // Obtener datos del formulario
@@ -12,26 +12,19 @@ $username = $_POST['username'];
 $password = $_POST['password'];
 
 // Consulta para verificar el usuario y rol
-$sql = "SELECT u.rol FROM usuarios u JOIN Rol r ON u.rol = r.ID WHERE u.username = ? AND u.Password = ?";
+$sql = "SELECT * FROM usuaris WHERE User = ? AND Password = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ss", $username, $password);
 $stmt->execute();
-$stmt->bind_result($rol);
+$stmt->bind_result($user);
 $stmt->fetch();
 
-if ($rol) {
-    $_SESSION['username'] = $username;
-    $_SESSION['rol'] = $rol;
-
-    // Redireccionar según el rol
-    if ($rol === 2) {
-        header("Location: dashboard_tecnico.php");
-    } elseif ($rol === 1) {
-        header("Location: dashboard_cliente.php");
-    }
+if ($user) {
+    //Si hay coincidencia
+    header("Location: index.php");
 } else {
     // Si las credenciales no son válidas
-    echo "<script>alert(' ¡¡Eh tú!!, deja ya las inyecciones de SQL, ponte a hacer cables de red o comprate un perro y deja de molestarnos y si te echas novia y desapareces de la informática mejor'); window.location.href = 'login.php';</script>";
+    echo "<script>alert(' Disculpi, però les credencials que ha donat no son correctes o no estan registrades'); window.location.href = 'login.php';</script>";
     
 }
 
