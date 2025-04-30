@@ -1,26 +1,28 @@
 import os
-import platform
-import sys
-import time
-#Crear puntos de Restauración
+import shutil
+from datetime import datetime
 
 SOURCE = input("Indica la carpeta que vols incloure en el punt de restauració: ").strip()
 DEST = input("Indica la carpeta on guardaràs el punt de restauració: ").strip()
 
-# Assegura que la carpeta de destí existeix
+# Validación de rutas
+if not os.path.isdir(SOURCE):
+    print("La carpeta d'origen no existeix.")
+    exit(1)
+
+# Crear la carpeta destino si no existe
 os.makedirs(DEST, exist_ok=True)
 
-# Crea un nom de fitxer únic amb la data
-backup_name = f"backup_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.tar.gz"
-backup_path = os.path.join(DEST, backup_name)
+# Crear nombre de archivo de copia de seguridad
+timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+backup_base_name = os.path.join(DEST, f"backup_{timestamp}")
 
-# Executa la comanda tar per fer la còpia de seguretat
+# Crear archivo .tar.gz (funciona en Linux y Windows)
 print("Creant el punt de restauració... Això pot trigar uns minuts.")
-result = subprocess.run(["tar", "-czvf", backup_path, SOURCE], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-# Comprova si la còpia s’ha fet correctament
-if result.returncode == 0:
-    print(f"Punt de restauració creat: {backup_path}")
-else:
+try:
+    archive_path = shutil.make_archive(backup_base_name, 'gztar', root_dir=SOURCE)
+    print(f"Punt de restauració creat: {archive_path}")
+except Exception as e:
     print("Hi ha hagut un error al crear el punt de restauració.")
-    print(result.stderr.decode())
+    print(e)
