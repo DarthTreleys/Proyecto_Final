@@ -1,15 +1,4 @@
 <?php
-/*session_start();
-$host="localhost";
-$usuari="root";
-$contrasenya="";
-$bbdd="ProjecteFinal";
-  
-$connexio= new mysqli($host, $usuari, $contrasenya, $bbdd)
-  
-if ($conn->connect_error) {
-    die("Error de connexio " . $conn->connect_error);
-}*/
 session_start();
 
 $host = "localhost";
@@ -17,9 +6,10 @@ $usuari = "root";
 $contrasenya = "";
 $bbdd = "ProjecteFinal";
 
-$conn = new mysqli($host, $usuari, $contrasenya, $bbdd);
-
-if ($conn->connect_error) {
-  die("Error de connexió: " . $conn->connect_error);
+try {
+  $pdo = new PDO("mysql:host=$host;dbname=$bbdd;charset=utf8", $usuari, $contrasenya);
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+  die("Error de connexió: " . $e->getMessage());
 }
 ?>
