@@ -4,7 +4,7 @@ require 'db.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $nombre  = $_POST['nombre'] ?? '';
   $usuario = $_POST['usuario'] ?? '';
-  $clave   = hash('sha256', $_POST['clave'] ?? '');
+  $clave   = $_POST['clave'] ?? '';
 
   // Verificar si existe
   $stmt = $pdo->prepare("SELECT id FROM usuarios WHERE usuario = ?");
