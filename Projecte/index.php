@@ -20,11 +20,11 @@
 <body>
   <div class="sidebar">
     <ul>
-      <li onclick="cargarContenido('inicio')">Inicio</li>
-      <li onclick="cargarContenido('perfil')">Perfil</li>
-      <li onclick="cargarContenido('mensajes')">Mensajes</li>
-      <li onclick="cargarContenido('configuracion')">Configuración</li>
-      <li onclick="cargarContenido('salir')">Salir</li>
+      <li><a href="inicio.php">Inicio</a></li>
+      <li><a href="perfil.php">Perfil</a></li>
+      <li><a href="mensajes.php">Mensajes</a></li>
+      <li><a href="configuracion.php">Configuración</a></li>
+      <li><a href="salir.php">Salir</a></li>
     </ul>
   </div>
 
