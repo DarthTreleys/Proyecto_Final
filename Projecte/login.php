@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $user = $stmt->fetch();
 
   // Verificar si existe y la contraseña es correcta
-  if ($user && password_verify($passwd, $user['Password'])) {
+  if ($user && $passwd === $user['Password']) {
     $_SESSION['usuari'] = $user['User'];
     header('Location: index.php');
     exit;
