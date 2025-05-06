@@ -45,7 +45,7 @@ if (!isset($_SESSION['usuari'])) {
 
     <div class="right-panel">
       <div class="profile-card">
-        <h4>Usuari: <?php echo htmlspecialchars($_SESSION['nom']); ?></h4>
+        <h4>Usuari: <?php echo htmlspecialchars($_SESSION['usuari']); ?></h4>
           <a href="logout.php">Tancar la sessio</a>
         <div class="profile-pic"></div>
       </div>
