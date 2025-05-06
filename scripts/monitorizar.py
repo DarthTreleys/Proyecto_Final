@@ -14,14 +14,6 @@ log = (
     "--------------------------\n"
 )
 
-if os.name="posix":
 with open("/var/log/sys_monitor.log", "a") as f:
     f.write(log)
     
-elif os.name="nt":
-# Ruta al archivo log dentro de la carpeta "Documents" del usuario
-log_path = os.path.expanduser("~\\Documents\\sys_monitor.log")
-# Asegurarse de que el directorio exista
-os.makedirs(os.path.dirname(log_path), exist_ok=True)
-with open(log_path, "a") as f:
-    f.write(log)
