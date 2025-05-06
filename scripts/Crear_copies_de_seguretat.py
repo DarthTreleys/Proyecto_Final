@@ -2,8 +2,8 @@ import os
 import platform
 import sys
 ### Crear copies de seguretat
-SOURCE = input("Directori base de la copia de seguretat:")
-DEST = input("Directori on es guardara la copia de seguretat:")
+SOURCE = "/home"
+DEST = "/"
 
 for root, _, files in os.walk(SOURCE):
     for file in files:
