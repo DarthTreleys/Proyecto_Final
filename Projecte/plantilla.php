@@ -31,22 +31,12 @@
     </form>
 
     <?php
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['run_script'])) {
-        $script = 'script.py';
-
-        // Ejecutar dependiendo del sistema operativo
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            // Windows
-            $command = "python $script";
-        } else {
-            // Linux / Unix
-            $command = "python3 $script";
-        }
-
-        // Ejecutar el script y mostrar salida
-        $output = shell_exec($command . " 2>&1");
-        echo "<pre>$output</pre>";
-    }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['run_script'])) {
+    $script = 'script.py';
+    $command = "python3 $script";
+    $output = shell_exec($command . " 2>&1");
+    echo "<pre>$output</pre>";
+}
     ?>
 </div>
 
