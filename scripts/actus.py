@@ -2,7 +2,7 @@ import subprocess
 import os
 import platform
 
-if os.name="posix":
+
 print("Actualizando lista de paquetes...")
 subprocess.run(["sudo", "apt", "update"], check=True)
 
@@ -14,5 +14,3 @@ subprocess.run(["sudo", "apt", "autoremove", "-y"], check=True)
 
 print("Actualización completada con éxito.")
 
-else: 
-print("Lo sentimos, su sistema no es compatible con nuestra aplicación.")
