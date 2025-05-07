@@ -1,15 +1,16 @@
 import os
-import shutil
+import subprocess
 
 SOURCE = "/home"
-DEST = "/backup" 
+DEST = "/backup"
 
 for root, _, files in os.walk(SOURCE):
     for file in files:
         src = os.path.join(root, file)
         dst = os.path.join(DEST, os.path.relpath(src, SOURCE))
+        dst_dir = os.path.dirname(dst)
 
-        os.makedirs(os.path.dirname(dst), exist_ok=True) 
-        shutil.copy2(src, dst)  
+        subprocess.run(["sudo", "mkdir", "-p", dst_dir], check=True)
+        subprocess.run(["sudo", "cp", "-p", src, dst], check=True)
 
 print("Còpia completada.")
