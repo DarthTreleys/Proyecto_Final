@@ -27,7 +27,7 @@ if (!isset($_SESSION['usuari'])) {
 <body>
   <div class="sidebar">
     <ul>
-      <li><a href="inicio.php">Inicio</a></li>
+      <li><a href="actus.php">Actualizaciones</a></li>
       <li><a href="perfil.php">Perfil</a></li>
       <li><a href="mensajes.php">Mensajes</a></li>
       <li><a href="configuracion.php">Configuración</a></li>
