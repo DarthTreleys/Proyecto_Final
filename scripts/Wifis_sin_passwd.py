@@ -10,6 +10,6 @@ import os
             ssid = parts[0]
             security = ' '.join(parts[1:])
             if 'WPA' not in security and 'WEP' not in security:
-                subprocess.run(['nmcli', 'connection', 'delete', ssid])
+                subprocess.run(["nmcli", "connection", "delete", ssid])
                 print(f"Red abierta eliminada o bloqueada: {ssid}")
 
