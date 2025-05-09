@@ -1,7 +1,7 @@
 import subprocess
 import os
 
-    result = subprocess.run(['nmcli', '-f', 'SSID,SECURITY', 'dev', 'wifi'], stdout=subprocess.PIPE)
+    result = subprocess.run(["sudo", "nmcli", "-f", "SSID,SECURITY", "dev", "wifi"], stdout=subprocess.PIPE)
     output = result.stdout.decode()
 
     for line in output.split('\n'):
