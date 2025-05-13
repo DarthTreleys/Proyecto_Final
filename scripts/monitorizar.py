@@ -3,8 +3,13 @@ import datetime
 import subprocess
 import os
 
-now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+log_file = "/var/log/sys_monitor.log"
 
+# Crear el archivo si no existe
+if not os.path.exists(log_file):
+    open(log_file, "a").close()
+
+now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 cpu = psutil.cpu_percent(interval=1)
 ram = psutil.virtual_memory()
 disk = psutil.disk_usage('/')
@@ -18,8 +23,5 @@ log = (
 )
 
 # Escribir directamente en el archivo
-subprocess.run("sudo touch /var/log/sys_monitor.txt", shell=True)
-subprocess.run("sudo chmod 777 /var/log/sys_monitor.txt", shell=True)
-subprocess.run("sudo echo "log" > /var/log/sys_monitor.txt", shell=True)
-
-print("Fitxer creat! Mira'l a /var/log/sys_monitor.txt")
+with open(log_file, "a") as f:
+    f.write(log)
