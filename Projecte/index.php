@@ -28,6 +28,7 @@ if (!isset($_SESSION['usuari'])) {
   <div class="sidebar">
     <ul>
       <li><a href="actus.php">Actualizaciones</a></li>
+      <li><a href="monitorizar.php">Monitorizar</a></li>
       <li><a href="perfil.php">Perfil</a></li>
       <li><a href="mensajes.php">Mensajes</a></li>
       <li><a href="configuracion.php">Configuración</a></li>
