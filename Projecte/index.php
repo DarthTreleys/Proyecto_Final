@@ -27,20 +27,22 @@ if (!isset($_SESSION['usuari'])) {
 <body>
   <div class="sidebar">
     <ul>
-      <li><a href="actus.php">Actualizaciones</a></li>
-      <li><a href="monitorizar.php">Monitorizar</a></li>
-      <li><a href="perfil.php">Perfil</a></li>
-      <li><a href="mensajes.php">Mensajes</a></li>
-      <li><a href="configuracion.php">Configuración</a></li>
-      <li><a href="salir.php">Salir</a></li>
+      <li><a href="actus.php">Actualitzacions</a></li>
+      <li><a href="backups.php">Backups</a></li>
+      <li><a href="temp.php">Temporals</a></li>
+      <li><a href="orden.php">Organitzacio de Fitxers</a></li>
+      <li><a href="monitoritzar.php">Monitoritzar</a></li>
+      <li><a href="rest.php">Punts de Restauracio</a></li>
+      <li><a href="users.php">Crear Nous Usuaris</a></li>
     </ul>
   </div>
+
 
   <div class="main-content">
     <div class="contenido-central">
       <h2>Contenido</h2>
       <div id="contenido">
-        <p>Cargando contenido...</p>
+        <p>Gràcies per descarregar aquesta eina de gestió de sistemes Ubuntu Server remotament. Actualment disposa de 7 processos, per[o aquesta xifra augmentara en el futur. Recordi donar els permisos necessaris per a que la web funcioni. Tota aquesta informacio la podras trobar en el readme>
       </div>
     </div>
 
@@ -60,3 +62,5 @@ if (!isset($_SESSION['usuari'])) {
   </div>
 </body>
 </html>
+
+
