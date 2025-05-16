@@ -1,13 +1,8 @@
-import psutil
 import datetime
 import subprocess
 import os
 
 log_file = "/var/log/sys_monitor.log"
-
-# Crear el archivo si no existe
-if not os.path.exists(log_file):
-    open(log_file, "a").close()
 
 now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 cpu = psutil.cpu_percent(interval=1)
@@ -25,3 +20,6 @@ log = (
 # Escribir directamente en el archivo
 with open(log_file, "a") as f:
     f.write(log)
+
+print("Monitorització completada! Comprova el fitxer en la direcció")
+
