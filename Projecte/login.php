@@ -1,8 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 session_start();
 require 'db.php';
 
@@ -15,8 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $stmt->execute([$usuari]);
   $user = $stmt->fetch();
 
-  // Verificar si existe y la contraseña es correcta
-  if ($user && $passwd === $user['Password']) {
+  // Verificar si existe y la contraseña es correcta usando password_verify
+  if ($user && password_verify($passwd, $user['Password'])) {
     $_SESSION['usuari'] = $user['User'];
     header('Location: index.php');
     exit;
@@ -41,4 +37,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <p>No tens compte? <a href="register.php">Registra't aquí</a></p>
 </body>
 </html>
-
