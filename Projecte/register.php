@@ -1,40 +1,54 @@
 <?php
-require 'db.php';
+session_start();
+require 'db.php'; // Este archivo debe contener tu conexión PDO como $pdo
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $nombre  = $_POST['nombre'] ?? '';
-  $usuario = $_POST['usuario'] ?? '';
-  $clave   = $_POST['clave'] ?? '';
+  $usuari = $_POST['usuari'] ?? '';
+  $passwd = $_POST['passwd'] ?? '';
+  $confirm_passwd = $_POST['confirm_passwd'] ?? '';
+  $error = '';
 
-  // Verificar si existe
-  $stmt = $pdo->prepare("SELECT id FROM usuarios WHERE usuario = ?");
-  $stmt->execute([$usuario]);
-
-  if ($stmt->fetch()) {
-    $error = "El usuario ya existe.";
+  // Validación básica
+  if (empty($usuari) || empty($passwd) || empty($confirm_passwd)) {
+    $error = "Tots els camps són obligatoris.";
+  } elseif ($passwd !== $confirm_passwd) {
+    $error = "Les contrasenyes no coincideixen.";
   } else {
-    $stmt = $pdo->prepare("INSERT INTO usuarios (nombre, usuario, clave) VALUES (?, ?, ?)");
-    $stmt->execute([$nombre, $usuario, $clave]);
-    header("Location: login.php");
-    exit;
+    // Verificar si el usuario ya existe
+    $stmt = $pdo->prepare("SELECT * FROM usuaris WHERE User = ?");
+    $stmt->execute([$usuari]);
+    if ($stmt->fetch()) {
+      $error = "Aquest usuari ja existeix.";
+    } else {
+      // Hashear la contraseña
+      $passwd_hash = password_hash($passwd, PASSWORD_DEFAULT);
+
+      // Insertar nuevo usuario
+      $stmt = $pdo->prepare("INSERT INTO usuaris (User, Password) VALUES (?, ?)");
+      if ($stmt->execute([$usuari, $passwd_hash])) {
+        $_SESSION['usuari'] = $usuari;
+        header('Location: index.php');
+        exit;
+      } else {
+        $error = "Error en registrar l'usuari.";
+      }
+    }
   }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Registro</title>
+  <title>Registrar-se</title>
 </head>
 <body>
-  <h2>Crear cuenta</h2>
+  <h2>Registre</h2>
   <?php if (!empty($error)) echo "<p style='color:red;'>$error</p>"; ?>
   <form method="POST">
-    <input type="text" name="nombre" placeholder="Nombre completo" required><br><br>
-    <input type="text" name="usuario" placeholder="Usuario" required><br><br>
-    <input type="password" name="clave" placeholder="Contraseña" required><br><br>
-    <button type="submit">Registrarse</button>
+    <input type="text" name="usuari" placeholder="Usuari" required><br><br>
+    <input type="password" name="passwd" placeholder="Contrasenya" required><br><br>
+    <input type="password" name="confirm_passwd" placeholder="Confirma la contrasenya" required><br><br>
+    <button type="submit">Registrar</button>
   </form>
-  <p><a href="login.php">Volver al login</a></p>
 </body>
 </html>
