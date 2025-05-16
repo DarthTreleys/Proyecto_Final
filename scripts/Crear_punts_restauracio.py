@@ -1,17 +1,10 @@
 import os
 import shutil
+import subprocess
 from datetime import datetime
 
-SOURCE = input("Indica la carpeta que vols incloure en el punt de restauració: ").strip()
-DEST = input("Indica la carpeta on guardaràs el punt de restauració: ").strip()
-
-# Validación de rutas
-if not os.path.isdir(SOURCE):
-    print("La carpeta d'origen no existeix.")
-    exit(1)
-
-# Crear la carpeta destino si no existe
-os.makedirs(DEST, exist_ok=True)
+SOURCE = "/"
+DEST = "/mnt"
 
 # Crear nombre de archivo de copia de seguridad
 timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
@@ -33,4 +26,5 @@ try:
 except subprocess.CalledProcessError as e:
     print("Hi ha hagut un error al crear el punt de restauració.")
     print(e.stderr)
+
 
