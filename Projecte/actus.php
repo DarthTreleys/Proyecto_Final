@@ -1,3 +1,4 @@
+  GNU nano 6.2                                            actus.php                                                     
 <!DOCTYPE html>
 <html lang="es">
 <head>
