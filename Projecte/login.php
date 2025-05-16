@@ -37,3 +37,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <p>No tens compte? <a href="register.php">Registra't aquí</a></p>
 </body>
 </html>
+
+
+  <title>Iniciar sessió</title>
+</head>
+<body>
+  <h2>Login</h2>
+  <?php if (!empty($error)) echo "<p style='color:red;'>$error</p>"; ?>
+  <form method="POST">
+    <input type="text" name="usuari" placeholder="Usuari" required><br><br>
+    <input type="password" name="passwd" placeholder="Contrasenya" required><br><br>
+    <button type="submit">Entrar</button>
+  </form>
+  <p>No tens compte? <a href="register.php">Registra't aquí</a></p>
+</body>
+</html>
