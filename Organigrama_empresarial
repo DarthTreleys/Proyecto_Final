@@ -1,17 +1,27 @@
                           ┌────────────────────────┐
                           │   Dirección General    │
-                          │   (Responsable Legal)  │
+                          │   Joan Cos y           │
+                          │   Iván González        │
                           └────────────┬───────────┘
                                        │
        ┌───────────────────────────────┼───────────────────────────────┐
        │                               │                               │
 ┌───────────────┐            ┌────────────────┐              ┌────────────────────┐
 │ Dirección     │            │ Desarrollo     │              │ Marketing y        │
-│ Técnica       │            │ y Mantenimiento│              │ Comunicación       │
+│ Técnica       |            │ y Mantenimiento│              │ Comunicación       │
+│ Joan Cos y    │            │ Iván González  │              │ Joan Cos           │                
+│ Iván González |            │                │              │                    │                
 └───────────────┘            └────────────────┘              └────────────────────┘
        │                               │                               │
 ┌───────────────┐            ┌───────────────────────┐         ┌──────────────────────┐
 │ Seguridad     │            │ Desarrollo Frontend   │         │ Diseño de marca      │
 │ y DevOps      │            │ y Backend             │         │ y redes sociales     │
 └───────────────┘            └───────────────────────┘         └──────────────────────┘
-<!-- comentario -->
+
+#Dirección General: Supervisan y representan el proyecto. Encargados de tomar decisiones clave, coordinar áreas y presentar el producto a inversores o docentes.
+
+#Dirección Técnica: Responsables de la viabilidad tecnológica. Supervisan el diseño del sistema, los estándares de seguridad y la escalabilidad.
+
+#Desarrollo y Mantenimiento: Programadores encargados del backend (scripts, automatización) y frontend (interfaz web).
+
+#Marketing y Comunicación: Encargados de crear la identidad visual, promocionar el proyecto (si se presentara como producto) y mantener redes sociales o páginas de presentación.
